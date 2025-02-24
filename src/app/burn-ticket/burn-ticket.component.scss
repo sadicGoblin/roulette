@@ -63,3 +63,13 @@ button:hover {
 }
 
 
+
+/* Responsivo */
+@media (max-width: 768px) {
+
+  form {
+    padding: 20px;
+    max-width: 300px;
+    min-width: 0px;
+  }
+}
