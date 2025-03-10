@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="form-container">
-        <form>
+        <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
             <div class="full-width">
                 <h2>Quemar Tickets</h2>
             </div>
@@ -8,13 +8,16 @@
             <div class="form-row full-width">
                 <mat-form-field appearance="fill">
                     <mat-label>Código del Ticket</mat-label>
-                    <input matInput placeholder="Ingresa el código del ticket" required>
+                    <input matInput placeholder="Ingresa el código del ticket" formControlName="codigoTicket" required>
+                    <mat-error *ngIf="ticketForm.get('codigoTicket')?.hasError('required') && ticketForm.get('codigoTicket')?.touched">
+                        El código del ticket es requerido.
+                      </mat-error>
                 </mat-form-field>
             </div>
-
+        
             <!-- Botón de enviar -->
             <div class="button-container full-width">
-                <button mat-raised-button color="primary">Quemar Ticket</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="ticketForm.invalid">Quemar Ticket</button>
             </div>
         </form>
     </div>

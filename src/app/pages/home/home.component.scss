@@ -1,62 +1,15 @@
-.container-fluid {
-  width: 100%;
-  height: 100%;
-  background-color: #efefef;
-}
 
-.form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-size: cover;
-}
 
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.logo-container img {
-  width: 300px;
-  height: auto;
-}
-
-form {
-  display: grid;
-  gap: 16px;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 600px;
-  min-width: 500px;
-}
 
 h2 {
-  text-align: center;
-  margin-bottom: 16px;
-  color: #014da1;
-  margin-top: -5px;
+  // text-align: center;
+  // margin-bottom: 16px;
+  // color: #1135F5;
+  // margin-top: -5px;
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
 
-.full-width {
-  grid-column: span 2;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 16px;
-}
 
 .button-container {
   display: flex;
@@ -65,7 +18,7 @@ h2 {
 }
 
 button {
-  background-color: #014da1 !important;
+  background-color: #1135F5 !important;
   color: white !important;
   padding: 12px 40px;
   width: 150px;
@@ -81,16 +34,47 @@ button:hover {
   color: white !important;
 }
 
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  form {
-    padding: 20px;
-    max-width: 300px;
-    min-width: 0px;
-  }
+button:disabled{
+  background-color: #bbbbbe !important;
+  cursor:not-allowed;
 }
+
+.form-body{
+  width: 100%;
+  height: auto;
+}
+
+
+.confirmation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 290px; /* Ajusta la altura según sea necesario */
+  background-color: #f0f0f0; /* Color de fondo suave */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  margin: 20px auto; /* Márgenes */
+}
+
+.confirmation-content {
+  text-align: center;
+}
+
+.confirmation-content img {
+  width: 80px; /* Ajusta el tamaño de la imagen */
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.confirmation-content h2 {
+  color: #15C99A; /* Verde para indicar éxito */
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.confirmation-content p {
+  font-size: 1em;
+  color: #333;
+}
+
+

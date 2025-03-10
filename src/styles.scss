@@ -1,4 +1,260 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Barlow", sans-serif;
+}
+
+.barlow-thin {
+    font-family: "Barlow", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.barlow-extralight {
+    font-family: "Barlow", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.barlow-light {
+    font-family: "Barlow", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.barlow-regular {
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.barlow-medium {
+    font-family: "Barlow", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.barlow-semibold {
+    font-family: "Barlow", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.barlow-bold {
+    font-family: "Barlow", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.barlow-extrabold {
+    font-family: "Barlow", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.barlow-black {
+    font-family: "Barlow", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.barlow-thin-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.barlow-extralight-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.barlow-light-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.barlow-regular-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.barlow-medium-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.barlow-semibold-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.barlow-bold-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.barlow-extrabold-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.barlow-black-italic {
+    font-family: "Barlow", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+}
+
+
+//   Generals
+
+.container-fluid{
+    width: 100%;
+    height: 100%;
+}
+
+.container-fluid, .container-page{
+    background-color: #1135F5;
+    background-image: url('./assets/path_0.svg');
+    /* Reemplaza con la ruta correcta */
+    background-repeat: no-repeat;
+    /* Evita que se repita el SVG */
+    background-position: top right;
+    /* Posición en la esquina superior derecha */
+    background-size: auto;
+}
+
+.form-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cheader {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1135F5;
+}
+
+.logo-container {
+    width: 100px;
+    max-width: 100px;
+}
+
+.htitle {
+    padding: 0 12px;
+    width: 100%;
+    /* Ocupa el ancho completo del padre */
+    box-sizing: border-box;
+    /* Incluye padding y border en el ancho total */
+
+}
+
+.cheader>div:nth-child(2) {
+    /* Selecciona el segundo div dentro de .cheader */
+    flex-grow: 1;
+    /* Ocupa el espacio restante */
+}
+
+.logo-container img {
+
+    width: 100%;
+}
+
+form {
+    display: grid;
+    gap: 16px;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    width: 600px;
+    min-width: 500px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.container-page{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}
+
+.card {
+    // display: flex;
+    padding: 24px;
+    background-color: #ffffff !important;
+    border-radius: 8px;
+    width: 80%;
+    height: auto;
+    min-width: 500px;
+    margin: 10% auto;
+
+}
+
+.mat-column-rut, 
+.mat-column-phone, 
+.mat-column-url, 
+.mat-column-firstName, 
+.mat-column-lastName {
+    white-space: nowrap;
+}
+
+.mat-column-address {
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    form{
+        padding: 20px;
+        max-width: 300px;
+        min-width: 0px;
+    }
+}

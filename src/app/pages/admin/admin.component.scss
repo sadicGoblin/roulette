@@ -1,0 +1,36 @@
+// #ccard {
+//     // display: flex;
+//     padding: 24px;
+//     background-color: #ffffff;
+//     border-radius: 8px;
+//     width: 600px;
+//     height: 100%;
+//     min-width: 500px;
+// }
+
+button {
+    background-color: #2d9b45 !important;
+    color: white !important;
+    padding: 8px 40px;
+    width: auto;
+    font-size: 12px;
+    border-radius: 25px;
+    border: none;
+    transition: all 0.3s ease;
+    margin: 12px auto;
+  }
+  
+  button:hover {
+    background-color: #ff3b00 !important;
+    color: white !important;
+  }
+
+  a{
+    color: #1135F5;
+    font-weight: 500;
+  }
+
+  .tachado {
+    text-decoration: line-through; /* Agrega una línea que tacha el texto */
+    color: gray;
+  }
