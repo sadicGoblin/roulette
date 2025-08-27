@@ -6,5 +6,5 @@ import { AdminComponent } from './pages/admin/admin.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'ticket/:code', component: BurnTicketComponent },
+  { path: '**', redirectTo: ''}
 ];
