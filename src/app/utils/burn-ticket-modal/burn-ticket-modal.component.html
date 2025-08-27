@@ -1,0 +1,29 @@
+<h3 class="header-title">Quemar Ticket</h3>
+
+<mat-dialog-content>
+  <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Código del Ticket</mat-label>
+      <input
+        matInput
+        formControlName="codigoTicket"
+        placeholder="Ingrese el código del ticket"
+      />
+      <mat-error *ngIf="ticketForm.get('codigoTicket')?.hasError('required')">
+        El código del ticket es requerido
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Salir</button>
+  <button
+    mat-raised-button
+    color="warn"
+    [disabled]="!ticketForm.valid || !buttonStatus"
+    (click)="onSubmit()"
+  >
+    Quemar Ticket
+  </button>
+</mat-dialog-actions>

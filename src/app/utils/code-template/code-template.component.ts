@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-code-template',
@@ -7,7 +7,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
   imports: [CommonModule],
   template: `
   <ng-container *ngIf="isLink">
-  <a href="/ticket/{{code}}" target="_blank" >
+    <a (click)="onCodeClick()" style="cursor: pointer;">
       <b>{{ code }}</b>
     </a>
   </ng-container>
@@ -30,6 +30,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 export class CodeTemplateComponent {
   @Input() codeStatus!: string;
   @Input() code!: string;
+  @Output() codeClicked = new EventEmitter<string>();
 
   isLink = true;
 
@@ -40,6 +41,12 @@ export class CodeTemplateComponent {
           this.isLink = false;
         }
       }
+    }
+  }
+
+  onCodeClick() {
+    if (this.isLink) {
+      this.codeClicked.emit(this.code);
     }
   }
 

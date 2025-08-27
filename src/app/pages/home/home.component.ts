@@ -31,6 +31,7 @@ export class HomeComponent implements AfterViewInit {
 
   formStatus = false;
   buttonStatus = true;
+  generatedCode = '';
 
   registrationForm!: FormGroup;
 
@@ -42,7 +43,7 @@ export class HomeComponent implements AfterViewInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       rut: ['', [Validators.required, Validators.pattern(/^\d{7,8}-[0-9kK]$/)]],
-      phone: ['', [Validators.required, Validators.pattern(/^[1-9]\d{8}$/)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       address: ['', Validators.required],
       addressFull: [, Validators.required],
       create: [moment().toISOString()],
@@ -88,9 +89,10 @@ export class HomeComponent implements AfterViewInit {
         console.log('Dato agregado con clave:', key);
         let name = obj['firstName'];
         let code = obj['code'];
-        let to = '56' + obj['phone'];
-        this.sendWhatsappMessage(name, code, to);
+        let to = '569' + obj['phone'];
+        // this.sendWhatsappMessage(name, code, to);
 
+        this.generatedCode = code;
         this.registrationForm.reset();
         this.formStatus = true;
       })

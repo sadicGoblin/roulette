@@ -1,10 +1,17 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { FirebaseDatabaseService } from '../../firebase-database-service';
 import { DateFormatPipe } from '../../pipes/date-format-pipe';
 import { CommonModule } from '@angular/common';
 import { CodeTemplateComponent } from '../../utils/code-template/code-template.component';
+import { BurnTicketModalComponent } from '../../utils/burn-ticket-modal/burn-ticket-modal.component';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import moment from 'moment';
@@ -13,7 +20,7 @@ import * as moment_ from 'moment-timezone';
 
 @Component({
   selector: 'app-admin',
-  imports: [MatTableModule, MatPaginatorModule, DateFormatPipe, CommonModule, CodeTemplateComponent],
+  imports: [MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, DateFormatPipe, CommonModule, CodeTemplateComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -25,7 +32,11 @@ export class AdminComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private firebaseService: FirebaseDatabaseService) {
+  constructor(
+    private firebaseService: FirebaseDatabaseService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
 
   }
 
@@ -83,6 +94,65 @@ export class AdminComponent implements AfterViewInit {
 
     // Usar file-saver para guardar el archivo
     saveAs(blob, 'datos.xlsx');
+  }
+
+  eliminarBaseDatos(): void {
+    // Mostrar prompt para la clave
+    const password = prompt('Ingresa la clave para eliminar la base de datos:');
+    
+    if (password === '357357') {
+      // Si la clave es correcta, mostrar confirmación
+      const confirmacion = confirm('¿Estás seguro de que quieres eliminar toda la base de datos? Esta acción no se puede deshacer.');
+      
+      if (confirmacion) {
+        this.ejecutarEliminacionBaseDatos();
+      }
+    } else if (password !== null) {
+      // Solo mostrar error si no fue cancelado (password !== null)
+      alert('Clave incorrecta. No se puede eliminar la base de datos.');
+    }
+  }
+
+  ejecutarEliminacionBaseDatos(): void {
+    this.firebaseService.deleteAllData('records').subscribe({
+      next: () => {
+        this.snackBar.open('Base de datos eliminada exitosamente', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+        // Actualizar la tabla
+        this.getData();
+        window.location.reload();
+      },
+      error: (error: any) => {
+        console.error('Error al eliminar la base de datos:', error);
+        this.snackBar.open('Error al eliminar la base de datos', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
+      }
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  abrirModalQuemar(codigo?: string) {
+    const dialogRef = this.dialog.open(BurnTicketModalComponent, {
+      width: 'auto',
+      data: { code: codigo }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Actualizar la tabla después de cerrar el modal
+      this.getData();
+    });
   }
 
 }

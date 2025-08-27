@@ -133,6 +133,21 @@ export class FirebaseDatabaseService {
             });
     }
 
+    // Función para eliminar todos los datos de un path específico
+    deleteAllData(path: string): Observable<any> {
+        return new Observable(observer => {
+            const dbRef = ref(this.db, path);
+            remove(dbRef)
+                .then(() => {
+                    observer.next('Datos eliminados exitosamente');
+                    observer.complete();
+                })
+                .catch(error => {
+                    observer.error(error);
+                });
+        });
+    }
+
 }
 
 interface Record {

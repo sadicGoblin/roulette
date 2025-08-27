@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+mat-dialog-content {
+  padding: 20px;
+  min-width: 400px;
+}
+
+.header-title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 25px;
+  padding-top: 10px;
+  margin-left: -7px;
+  color: #1135F5;
+}
+
+form {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  min-width: 200px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -10px;
+}
+
+button[color="warn"] {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+button[color="warn"]:disabled {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+}
+
+button {
+  min-width: 120px;
+}

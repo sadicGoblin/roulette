@@ -1,87 +1,125 @@
 <div class="container-page">
-    <div class="card">
-
-        <div class="cheader">
-            <div class="logo-container full-width">
-                <img src="../../../assets/logoentel.png" alt="Logo">
-            </div>
-            <div class="htitle">
-                <h3 class="barlow-medium">Admin | Listado de registros</h3>
-            </div>
-        </div>
-
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-            <!-- Position Column -->
-            <ng-container matColumnDef="create">
-                <th mat-header-cell *matHeaderCellDef> Fecha </th>
-                <td mat-cell *matCellDef="let element"> {{element.create | dateFormat}} </td>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="firstName">
-                <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="lastName">
-                <th mat-header-cell *matHeaderCellDef> Apellido </th>
-                <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-            </ng-container>
-
-            <!-- Ci Column -->
-            <ng-container matColumnDef="rut">
-                <th mat-header-cell *matHeaderCellDef> Rut </th>
-                <td mat-cell *matCellDef="let element"> {{element.rut}} </td>
-            </ng-container>
-
-            <!-- Phone Column -->
-            <ng-container matColumnDef="phone">
-                <th mat-header-cell *matHeaderCellDef> Fono </th>
-                <td mat-cell *matCellDef="let element">
-                    
-                    <a href="https://wa.me/56{{element.phone}}" target="_blank">+56 {{element.phone}}</a>
-                      </td>
-            </ng-container>
-
-            <!-- Address Column -->
-            <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef> Dirección </th>
-                <td mat-cell *matCellDef="let element"> {{element.addressFull?.formattedAddress || element.address}} </td>
-            </ng-container>
-
-            <!-- Code Column -->
-            <ng-container matColumnDef="code">
-                <th mat-header-cell *matHeaderCellDef> Code </th>
-                <td mat-cell *matCellDef="let element" [class.tachado]="element.codeStatus === 'O'">
-                    <!-- <a href="/ticket" target="_blank" *ngIf="element.codeStatus === 'P'"><b>{{element.code}}</b></a>
-                    <ng-container *ngIf="element.codeStatus == 'P'">
-                        Hola!
-                    </ng-container>
-                    {{element.codeStatus}} -->
-                    <!-- <span *ngIf="element.codeStatus === 'O'"><b>{{element.code}}</b></span> -->
-                    <app-code-template [codeStatus]="element.codeStatus" [code]="element.code"></app-code-template>
-                </td>
-              </ng-container>
-
-            <!-- Pin Column -->
-            <ng-container matColumnDef="url">
-                <th mat-header-cell *matHeaderCellDef> Mapa </th>
-                <td mat-cell *matCellDef="let element">
-                    <a href="https://www.google.com/maps/search/?api=1&query={{element.addressFull.geometry.lat + ',' + element.addressFull.geometry.lng}}"
-                        target="_blank"><img src="../../../assets/pin_icon.svg" /></a>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[10, 20, 50, 100, 1000]" showFirstLastButtons></mat-paginator>
-
-        <button (click)="exportarAExcel()" mat-raised-button color="primary">Exportar Planilla</button>
-
-
+  <div class="card">
+    <div class="cheader">
+      <div class="logo-container full-width">
+        <img src="../../../assets/logoentel.png" alt="Logo" />
+      </div>
+      <div class="htitle">
+        <h3 class="barlow-medium">Admin | Listado de registros</h3>
+      </div>
+      <div class="header-actions">
+        <button mat-raised-button color="accent" (click)="abrirModalQuemar()">
+          Quemar Tickets
+        </button>
+      </div>
     </div>
 
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar en todos los campos</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Escriba para buscar..."
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Position Column -->
+      <ng-container matColumnDef="create">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.create | dateFormat }}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Apellido</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+      </ng-container>
+
+      <!-- Ci Column -->
+      <ng-container matColumnDef="rut">
+        <th mat-header-cell *matHeaderCellDef>Rut</th>
+        <td mat-cell *matCellDef="let element">{{ element.rut }}</td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Fono</th>
+        <td mat-cell *matCellDef="let element">
+          <a href="https://wa.me/56{{ element.phone }}" target="_blank"
+            >+56 {{ element.phone }}</a
+          >
+        </td>
+      </ng-container>
+
+      <!-- Address Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Dirección</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.addressFull?.formattedAddress || element.address }}
+        </td>
+      </ng-container>
+
+      <!-- Code Column -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>Code</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [class.tachado]="element.codeStatus === 'O'"
+        >
+          <app-code-template
+            [codeStatus]="element.codeStatus"
+            [code]="element.code"
+            (codeClicked)="abrirModalQuemar($event)"
+          ></app-code-template>
+        </td>
+      </ng-container>
+
+      <!-- Pin Column -->
+      <ng-container matColumnDef="url">
+        <th mat-header-cell *matHeaderCellDef>Mapa</th>
+        <td mat-cell *matCellDef="let element">
+          <a
+            href="https://www.google.com/maps/search/?api=1&query={{
+              element.addressFull.geometry.lat +
+                ',' +
+                element.addressFull.geometry.lng
+            }}"
+            target="_blank"
+            ><img src="../../../assets/pin_icon.svg"
+          /></a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[10, 20, 50, 100, 1000]"
+      showFirstLastButtons
+    ></mat-paginator>
+
+    <button (click)="exportarAExcel()" mat-raised-button color="primary">
+      Exportar Planilla
+    </button>
+
+    <!-- <button
+      (click)="eliminarBaseDatos()"
+      mat-raised-button
+      color="warn"
+      style="margin-left: 10px"
+    >
+      Eliminar Base de Datos
+    </button> -->
+  </div>
 </div>
