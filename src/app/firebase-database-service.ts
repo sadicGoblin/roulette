@@ -6,13 +6,13 @@ import { Observable } from 'rxjs';
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAuIhNOePMCx9CFS9F2tdGZiVV9F_C5RzM",
-    authDomain: "rout-9f25c.firebaseapp.com",
-    databaseURL: "https://rout-9f25c-default-rtdb.firebaseio.com",
-    projectId: "rout-9f25c",
-    storageBucket: "rout-9f25c.firebasestorage.app",
-    messagingSenderId: "478241178049",
-    appId: "1:478241178049:web:dc149c2c4e13e539922f40"
+    apiKey: "AIzaSyBDzrLTTUlM49B52am9MXA3TzrfF2poj0c",
+    authDomain: "entel-tickets.firebaseapp.com",
+    databaseURL: "https://entel-tickets-default-rtdb.firebaseio.com",
+    projectId: "entel-tickets",
+    storageBucket: "entel-tickets.firebasestorage.app",
+    messagingSenderId: "284881536170",
+    appId: "1:284881536170:web:c3d143791540c8a49e7cd3"
 };
 
 @Injectable({

@@ -25,7 +25,7 @@ import * as moment_ from 'moment-timezone';
   styleUrl: './admin.component.scss'
 })
 export class AdminComponent implements AfterViewInit {
-  displayedColumns: string[] = ['create', 'firstName', 'lastName', 'rut', 'phone', 'address', 'code', 'url'];
+  displayedColumns: string[] = ['create', 'firstName', 'lastName', 'phone', 'mail', 'empresa', 'code'];
 
   datos: any[] = [];
   dataSource!: MatTableDataSource<any>; // Define el tipo de datos de tus filas

@@ -45,28 +45,24 @@
         <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
       </ng-container>
 
-      <!-- Ci Column -->
-      <ng-container matColumnDef="rut">
-        <th mat-header-cell *matHeaderCellDef>Rut</th>
-        <td mat-cell *matCellDef="let element">{{ element.rut }}</td>
-      </ng-container>
-
       <!-- Phone Column -->
       <ng-container matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef>Fono</th>
+        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+        <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+      </ng-container>
+
+      <!-- Mail Column -->
+      <ng-container matColumnDef="mail">
+        <th mat-header-cell *matHeaderCellDef>Correo</th>
         <td mat-cell *matCellDef="let element">
-          <a href="https://wa.me/56{{ element.phone }}" target="_blank"
-            >+56 {{ element.phone }}</a
-          >
+          <a href="mailto:{{ element.mail }}" target="_blank">{{ element.mail }}</a>
         </td>
       </ng-container>
 
-      <!-- Address Column -->
-      <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef>Dirección</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.addressFull?.formattedAddress || element.address }}
-        </td>
+      <!-- Empresa Column -->
+      <ng-container matColumnDef="empresa">
+        <th mat-header-cell *matHeaderCellDef>Empresa</th>
+        <td mat-cell *matCellDef="let element">{{ element.empresa }}</td>
       </ng-container>
 
       <!-- Code Column -->
@@ -82,22 +78,6 @@
             [code]="element.code"
             (codeClicked)="abrirModalQuemar($event)"
           ></app-code-template>
-        </td>
-      </ng-container>
-
-      <!-- Pin Column -->
-      <ng-container matColumnDef="url">
-        <th mat-header-cell *matHeaderCellDef>Mapa</th>
-        <td mat-cell *matCellDef="let element">
-          <a
-            href="https://www.google.com/maps/search/?api=1&query={{
-              element.addressFull.geometry.lat +
-                ',' +
-                element.addressFull.geometry.lng
-            }}"
-            target="_blank"
-            ><img src="../../../assets/pin_icon.svg"
-          /></a>
         </td>
       </ng-container>
 

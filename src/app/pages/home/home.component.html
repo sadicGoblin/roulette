@@ -15,15 +15,15 @@
 
                 <div class="form-row full-width">
                     <mat-form-field appearance="fill">
-                        <mat-label>Nombres</mat-label>
-                        <input matInput formControlName="firstName" placeholder="Ingresa tus nombres">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="firstName" placeholder="Ingresa tu nombre">
                         <mat-error *ngIf="registrationForm.get('firstName')?.hasError('required')">Campo
-                            requerido.</mat-error>
+                            requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
-                        <mat-label>Apellidos</mat-label>
-                        <input matInput formControlName="lastName" placeholder="Ingresa tus apellidos">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput formControlName="lastName" placeholder="Ingresa tu apellido">
                         <mat-error *ngIf="registrationForm.get('lastName')?.hasError('required')">Campo
                             requerido</mat-error>
                     </mat-form-field>
@@ -31,33 +31,28 @@
 
                 <div class="form-row full-width">
                     <mat-form-field appearance="fill">
-                        <mat-label>RUT</mat-label>
-                        <input matInput formControlName="rut" placeholder="Ej: 12345678-9">
-                        <mat-error *ngIf="registrationForm.get('rut')?.hasError('required')">RUT es
-                            requerido</mat-error>
-                        <mat-error *ngIf="registrationForm.get('rut')?.hasError('pattern')">Rut con formato
-                            invalido.</mat-error>
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput formControlName="phone" placeholder="Ingresa tu teléfono">
+                        <mat-error *ngIf="registrationForm.get('phone')?.hasError('required')">El teléfono es
+                            obligatorio</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
-                        <mat-label>Teléfono</mat-label>
-                        <span matTextPrefix class="matTextPrefix">+569 </span>
-                        <input matInput formControlName="phone" placeholder="12345678" maxlength="8">
-                        <mat-error *ngIf="registrationForm.get('phone')?.hasError('required')">El número de teléfono es
-                            obligatorio.</mat-error>
-                        <mat-error *ngIf="registrationForm.get('phone')?.hasError('pattern')">El número de teléfono debe
-                            tener exactamente 8 dígitos.</mat-error>
+                        <mat-label>Mail</mat-label>
+                        <input matInput formControlName="mail" type="email" placeholder="correo@ejemplo.com">
+                        <mat-error *ngIf="registrationForm.get('mail')?.hasError('required')">El correo es
+                            obligatorio</mat-error>
+                        <mat-error *ngIf="registrationForm.get('mail')?.hasError('email')">Correo inválido</mat-error>
                     </mat-form-field>
                 </div>
 
                 <div class="form-row full-width">
-                    <!-- <mat-form-field appearance="fill" class="full-width">
-                        <mat-label>Dirección</mat-label>
-                        <input matInput formControlName="address" id="autocomplete" placeholder="Ingresa tu dirección">
-                        <mat-error *ngIf="registrationForm.get('address')?.hasError('required')">Campo
-                            requerido.</mat-error>
-                    </mat-form-field> -->
-                    <app-txtgplaces (selectedPlace)="onChangePlace($event)"></app-txtgplaces>
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Empresa</mat-label>
+                        <input matInput formControlName="empresa" placeholder="Ingresa tu empresa">
+                        <mat-error *ngIf="registrationForm.get('empresa')?.hasError('required')">Campo
+                            requerido</mat-error>
+                    </mat-form-field>
                 </div>
 
                 <div class="button-container full-width">

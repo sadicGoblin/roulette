@@ -14,13 +14,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FirebaseDatabaseService } from '../../firebase-database-service';
 import moment from 'moment';
 import { WhatsappService } from '../../services/wp-service';
-import { TxtgplacesComponent } from '../../utils/txtgplaces/txtgplaces.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatProgressSpinnerModule, TxtgplacesComponent],
+  imports: [ReactiveFormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -44,10 +43,9 @@ export class HomeComponent implements AfterViewInit {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      rut: ['', [Validators.required, Validators.pattern(/^\d{7,8}-[0-9kK]$/)]],
-      phone: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-      address: ['', Validators.required],
-      addressFull: [, Validators.required],
+      phone: ['', Validators.required],
+      mail: ['', [Validators.required, Validators.email]],
+      empresa: ['', Validators.required],
       create: [moment().toISOString()],
       code: '-',
       codeStatus: 'P'
@@ -59,12 +57,6 @@ export class HomeComponent implements AfterViewInit {
     
   }
 
-  onChangePlace(event:any){
-    console.log('event place', event);
-    this.registrationForm.get('addressFull')?.setValue(event);
-    this.registrationForm.get('address')?.setValue(event?.formattedAddress);
-    console.log('this.registrationForm', this.registrationForm.value);
-  }
 
   async onSubmit(event: Event) {
 
@@ -73,33 +65,15 @@ export class HomeComponent implements AfterViewInit {
     if (this.registrationForm.valid) {
       console.log(this.registrationForm.value);
       
-      // Validar que el RUT no exista en la fecha actual
-      const rut = this.registrationForm.get('rut')?.value;
-      const fecha = this.registrationForm.get('create')?.value;
-      
       try {
-        const rutExists = await this.firebaseService.checkRutExistsForDate(rut, fecha);
-        
-        if (rutExists) {
-          // Mostrar mensaje de error si el RUT ya existe en la fecha actual
-          this._snackBar.open('El RUT ya fue ingresado en la fecha actual. No se puede registrar nuevamente.', 'Cerrar', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-          this.isLoading = false;
-          return; // No continuar con el guardado
-        }
-        
-        // Si no existe, continuar con el proceso normal
+        // Generar código y guardar directamente
         const code = await this.firebaseService.generateCode();
         this.registrationForm.get('code')?.setValue(code);
         this.saveData();
         
       } catch (error) {
-        console.error('Error al validar RUT:', error);
-        this._snackBar.open('Error al validar el RUT. Por favor intente nuevamente.', 'Cerrar', {
+        console.error('Error al guardar:', error);
+        this._snackBar.open('Error al guardar el formulario. Por favor intente nuevamente.', 'Cerrar', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
           duration: 5000
@@ -151,10 +125,7 @@ export class HomeComponent implements AfterViewInit {
     for (const key in formValue) {
       if (formValue.hasOwnProperty(key)) {
         let value = formValue[key];
-        if (key === 'rut') {
-          normalizedData[key] = value.toUpperCase();
-        }
-        else if (key !== 'create') {
+        if (key !== 'create' && key !== 'mail') {
           if (typeof value === 'string') {
             normalizedData[key] = this.normalizeName(value);
           } else {
