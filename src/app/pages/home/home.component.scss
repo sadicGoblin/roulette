@@ -8,12 +8,23 @@ button {
   background-color: #1135F5 !important;
   color: white !important;
   padding: 12px 40px;
-  width: 150px;
+  min-width: 150px;
   height: 45px;
   font-size: 16px;
   border-radius: 25px;
   border: none;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-spinner {
+    margin-right: 8px;
+
+    ::ng-deep circle {
+      stroke: white !important;
+    }
+  }
 }
 
 button:hover {

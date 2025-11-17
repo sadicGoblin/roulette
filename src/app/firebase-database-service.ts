@@ -148,6 +148,39 @@ export class FirebaseDatabaseService {
         });
     }
 
+    // Función para verificar si un RUT ya existe en una fecha específica
+    checkRutExistsForDate(rut: string, date: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const recordsRef = ref(this.db, 'records');
+            get(recordsRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const records = snapshot.val();
+                        // Normalizar el RUT a mayúsculas para la comparación
+                        const normalizedRut = rut.toUpperCase();
+                        
+                        // Extraer solo la fecha (YYYY-MM-DD) del timestamp ISO
+                        const checkDate = date.substring(0, 10);
+                        
+                        // Buscar si existe algún registro con el mismo RUT y fecha
+                        const exists = Object.values(records).some((record: any) => {
+                            const recordDate = record.create ? record.create.substring(0, 10) : '';
+                            const recordRut = record.rut ? record.rut.toUpperCase() : '';
+                            return recordRut === normalizedRut && recordDate === checkDate;
+                        });
+                        
+                        resolve(exists);
+                    } else {
+                        resolve(false);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error al verificar RUT:', error);
+                    reject(error);
+                });
+        });
+    }
+
 }
 
 interface Record {

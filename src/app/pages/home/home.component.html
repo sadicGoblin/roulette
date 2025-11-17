@@ -61,8 +61,12 @@
                 </div>
 
                 <div class="button-container full-width">
-                    <button mat-raised-button type="submit" [disabled]="!registrationForm.valid && buttonStatus"
-                        color="primary">Guardar</button>
+                    <button mat-raised-button type="submit" [disabled]="!registrationForm.valid || isLoading"
+                        color="primary">
+                        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+                        <span *ngIf="!isLoading">Guardar</span>
+                        <span *ngIf="isLoading">Validando...</span>
+                    </button>
                 </div>
 
             </ng-container>

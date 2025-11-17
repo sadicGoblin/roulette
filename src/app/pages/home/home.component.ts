@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -19,7 +20,7 @@ import { TxtgplacesComponent } from '../../utils/txtgplaces/txtgplaces.component
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, TxtgplacesComponent],
+  imports: [ReactiveFormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatProgressSpinnerModule, TxtgplacesComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -31,6 +32,7 @@ export class HomeComponent implements AfterViewInit {
 
   formStatus = false;
   buttonStatus = true;
+  isLoading = false;
   generatedCode = '';
 
   registrationForm!: FormGroup;
@@ -67,16 +69,47 @@ export class HomeComponent implements AfterViewInit {
   async onSubmit(event: Event) {
 
     event.preventDefault();
+    this.isLoading = true;
     if (this.registrationForm.valid) {
       console.log(this.registrationForm.value);
-      // Send data to your backend or perform other actions here
+      
+      // Validar que el RUT no exista en la fecha actual
+      const rut = this.registrationForm.get('rut')?.value;
+      const fecha = this.registrationForm.get('create')?.value;
+      
+      try {
+        const rutExists = await this.firebaseService.checkRutExistsForDate(rut, fecha);
+        
+        if (rutExists) {
+          // Mostrar mensaje de error si el RUT ya existe en la fecha actual
+          this._snackBar.open('El RUT ya fue ingresado en la fecha actual. No se puede registrar nuevamente.', 'Cerrar', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+          this.isLoading = false;
+          return; // No continuar con el guardado
+        }
+        
+        // Si no existe, continuar con el proceso normal
+        const code = await this.firebaseService.generateCode();
+        this.registrationForm.get('code')?.setValue(code);
+        this.saveData();
+        
+      } catch (error) {
+        console.error('Error al validar RUT:', error);
+        this._snackBar.open('Error al validar el RUT. Por favor intente nuevamente.', 'Cerrar', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 5000
+        });
+        this.isLoading = false;
+      }
     } else {
       this.registrationForm.markAllAsTouched();
+      this.isLoading = false;
     }
-    const code = await this.firebaseService.generateCode();
-    this.registrationForm.get('code')?.setValue(code);
-
-    this.saveData();
   }
 
   saveData() {
@@ -95,6 +128,7 @@ export class HomeComponent implements AfterViewInit {
         this.generatedCode = code;
         this.registrationForm.reset();
         this.formStatus = true;
+        this.isLoading = false;
       })
       .catch(error => {
         console.error('Error al agregar el dato:', error);
@@ -103,6 +137,7 @@ export class HomeComponent implements AfterViewInit {
           verticalPosition: this.verticalPosition,
         });
         this.buttonStatus = true;
+        this.isLoading = false;
         // Muestra un mensaje de error al usuario
       });
   }
